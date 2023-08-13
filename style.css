@@ -1,0 +1,20 @@
+body { background-color: #F5F5DC;
+font-family : Verdana, Arial, Helvetica, sans-serif;
+font-size: medium;
+border-left:3px solid #00ff00;
+border-right:3px solid #00ff00;
+border-bottom:3px solid #00ff00;
+border-top:3px solid #00ff00;
+margin: 0px;
+padding: 2px;
+color: #000000; }
+img { border: 0px; }
+a, a:active  { color: #0000ff; }
+a:visited { color: #0000ff; }
+a:hover { color: #0000ff; }
+head { font-family : Verdana, Arial, Helvetica, sans-serif; font-size: medium; }
+a:hover { text-decoration: none;
+background:#ffffff;
+color: #FF0000; }
+font-weight: bold;
+}
