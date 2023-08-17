@@ -67,7 +67,7 @@ echo "<p align=\"center\">";
 echo "<img src=\"images/logo.png\" alt=\"\"><br />";
 echo "<br />";
 echo "<img src=\"images/ok.gif\"><b>Bem vindo $usuario</b>!<br />";
-echo "<br /><a href=\"index.php?action=main&sid=$sid\"><b>Entrar</b></a><br />";
+echo "<br /><a href=\"page.php?page=main&sid=$sid\"><b>Entrar</b></a><br />";
 echo "<br />Salve esta pagina nos marcadores para logar automaticamente!";
 echo "</p>";
 }

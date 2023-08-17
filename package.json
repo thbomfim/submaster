@@ -1,0 +1,14 @@
+{
+  "name": "submaster",
+  "version": "1.0.0",
+  "description": "atualizando um script antigo para versão do php mais moderna somente afins de estudo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "thbomfim",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.1"
+  }
+}

@@ -1,16 +1,23 @@
 <?php
 //include files core.php and config.php
-include("core.php");
 include("config.php");
-echo "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>";
-echo "<!DOCTYPE html PUBLIC \"-//WAPFORUM//DTD XHTML Mobile 1.0//EN\"\"http://www.wapforum.org/DTD/xhtml-mobile10.dtd\">";
-echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">";
-echo "<head>";
-echo "<title>$stitle</title>";
-echo "<link rel=\"StyleSheet\" type=\"text/css\" href=\"style.css\" />";
-echo "</head>";
-echo "<body>";
+include("core.php");
+?>
 
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <title><?= "$stitle" ?></title>
+</head>
+
+<body>
+
+    <?php
 cleardata();//erases all old data
 $action = $_GET["action"] ?? '';
 $sid = $_GET["sid"] ?? '';
@@ -61,7 +68,6 @@ addvisitor();//add visit in site
 adicionar_online(getuid_sid($sid),"Página principal","");
 $uid = getuid_sid($sid);
 echo "<p align=\"center\">";
-echo "".date("D d M y - H:i:s")."<br />";
 echo "<img src=\"images/logo.png\" alt=\"*\"/><br />";
 $mural = scan_msg(htmlspecialchars(mural_admin()), $sid);
 echo "$mural<br />";
@@ -149,12 +155,8 @@ echo "<b>Menu extra</b>";
 echo "</p>";
 echo "<p align=\"left\">";
 $trofeus = $pdo->query("SELECT COUNT(*) FROM fun_trofeus")->fetch();
-echo "<a href=\"relacionamento.php?sid=$sid\"><img src=\"images/coracao.gif\" alt=\"\">Relacionamento</a><br />";
-echo "<a href=\"trofeus.php?sid=$sid\"><img src=\"images/trofeus.gif\" alt=\"*\">Trof�us(".$trofeus[0].")</a><br />";
+echo "<a href=\"trofeus.php?sid=$sid\"><img src=\"images/trofeus.gif\" alt=\"*\">Troféus(".$trofeus[0].")</a><br />";
 echo "<a href=\"banco.php?sid=$sid\"><img src=\"images/banco.png\" alt=\"*\"/>Banco $snome</a><br />";
-echo "<a href=\"loja.php?a=main&sid=$sid\"><img src=\"images/loja.png\" alt=\"*\"/>Loja de presentes</a><br />";
-echo "<a href=\"horoscopo.php?sid=$sid\"><img src=\"images/star.gif\" alt=\"*\"/>Hor�scopo</a><br />";
-echo "<a href=\"novelas.php?sid=$sid\"><img src=\"images/novelas.gif\" alt=\"*\">Novelas</a><br />";
 echo "<a href=\"index.php?action=stats&sid=$sid\"><img src=\"images/top.gif\" alt=\"*\"/>Estat�sticas</a><br />";
 $sml = $pdo->query("SELECT COUNT(*) FROM fun_smilies")->fetch();
 echo "<a href=\"paginas.php?p=sml&sid=$sid\"><img src=\"images/bug.gif\" alt=\"*\"/>Smilies($sml[0])</a><br />";
@@ -2021,3 +2023,9 @@ echo "<b>EstaçãoWAP.COM</b>";
 echo "</p>";
 }
 ?>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="node_modules/@popperjs/core/dist/umd/popper.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+
+</html>
