@@ -11,7 +11,7 @@ date_default_timezone_set("Brazil/East");
   */
   try
   {
-    $pdo = new PDO("mysql:host=localhost;dbname=estacao", "root", "");
+    $pdo = new PDO("mysql:host=localhost;dbname=submaster", "root", "thbomfim");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     $conectando = True;
