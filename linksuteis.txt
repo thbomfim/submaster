@@ -1,0 +1,4 @@
+echo "<a href=\"index.php?action=search&sid=$sid\"><img src=\"images/buscar.gif\" alt=\"*\"/>Buscar</a><br />";
+
+$paceiros = $pdo->query("SELECT COUNT(*) FROM fun_parceiros")->fetch();
+echo "<a href=\"parceiros.php?sid=$sid\"><img src=\"images/parceiros.gif\" alt=\"*\">Paceiros(".$paceiros[0].")</a><br />";

@@ -10,8 +10,8 @@ include("core.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+   <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/dist/css/style.css">
     <title><?= "$stitle" ?></title>
 </head>
 
@@ -69,18 +69,33 @@ adicionar_online(getuid_sid($sid),"Página principal","");
 $uid = getuid_sid($sid);
 echo "<p align=\"center\">";
 echo "<img src=\"images/logo.png\" alt=\"*\"/><br />";
+echo "<div class=\"forum\">Mural Admin</div>";
 $mural = scan_msg(htmlspecialchars(mural_admin()), $sid);
 echo "$mural<br />";
-$Hour = date("G",time());
-$nick = getnick_uid($uid);
-if ($Hour <= 4) { $saldacao = "Boa Madrugada <a href=\"index.php?action=perfil&who=$uid&sid=$sid\">$nick</a>!"; }
-else if ($Hour <= 11) { $saldacao = "Bom Dia <a href=\"index.php?action=perfil&who=$uid&sid=$sid\">$nick</a>!"; }
-else if ($Hour <= 12) { $saldacao = "Bom Almoço <a href=\"index.php?action=perfil&who=$uid&sid=$sid\">$nick</a>!"; }
-else if ($Hour <= 17) { $saldacao = "Boa Tarde <a href=\"index.php?action=perfil&who=$uid&sid=$sid\">$nick</a>!"; }
-else if ($Hour <= 22) { $saldacao = "Boa Noite <a href=\"index.php?action=perfil&who=$uid&sid=$sid\">$nick</a>!"; }
-else if ($Hour <= 24) { $saldacao = "Boa Madrugada <a href=\"index.php?action=perfil&who=$uid&sid=$sid\">$nick</a>!"; }
-echo "<center>$saldacao</center>";
 echo "</p>";
+echo "<br>";
+echo "<div class=\"forum\">forum</div>";
+echo "</p>";
+$fcats = $pdo->query("SELECT id, name FROM fun_fcats ORDER BY position, id");
+$iml = "<img src=\"images/1.gif\" alt=\"*\"/>";
+while($fcat= $fcats->fetch())
+{
+$catlink = "<a href=\"index.php?action=viewcat&sid=$sid&cid=$fcat[0]\">$iml$fcat[1]</a>";
+echo "$catlink<br />";
+$forums = $pdo->query("SELECT id, name FROM fun_forums WHERE cid='".$fcat[0]."' AND clubid='0' ORDER BY position, id, name");
+if(flood_forum()==0)
+{
+echo "";
+while($forum= $forums->fetch())
+{
+if(canaccess(getuid_sid($sid),$forum[0]))
+{
+}
+}
+echo "";
+}
+}
+echo "<br>";
 //count pm
 $tmsg = getpmcount(getuid_sid($sid));
 $umsg = getunreadpm(getuid_sid($sid));
@@ -144,30 +159,6 @@ $memid = $pdo->query("SELECT id, name  FROM fun_users ORDER BY regdate DESC LIMI
 echo "Novo usuário: <b><a href=\"index.php?action=perfil&who=$memid[0]&sid=$sid\">".getnick_uid($memid[0])."</a></b><br /><br />";
 echo "<a href=\"index.php?action=sair&sid=$sid\"><img src=\"teks/hit.gif\" alt=\"*\"/>";
 echo "Sair</a>";
-echo "</p>";
-}
-/////////////////////////////////////menu extra
-else if($action=="sub")
-{
-adicionar_online(getuid_sid($sid),"Menu extra","");
-echo "<p align=\"center\">";
-echo "<b>Menu extra</b>";
-echo "</p>";
-echo "<p align=\"left\">";
-$trofeus = $pdo->query("SELECT COUNT(*) FROM fun_trofeus")->fetch();
-echo "<a href=\"trofeus.php?sid=$sid\"><img src=\"images/trofeus.gif\" alt=\"*\">Troféus(".$trofeus[0].")</a><br />";
-echo "<a href=\"banco.php?sid=$sid\"><img src=\"images/banco.png\" alt=\"*\"/>Banco $snome</a><br />";
-echo "<a href=\"index.php?action=stats&sid=$sid\"><img src=\"images/top.gif\" alt=\"*\"/>Estat�sticas</a><br />";
-$sml = $pdo->query("SELECT COUNT(*) FROM fun_smilies")->fetch();
-echo "<a href=\"paginas.php?p=sml&sid=$sid\"><img src=\"images/bug.gif\" alt=\"*\"/>Smilies($sml[0])</a><br />";
-echo "<a href=\"index.php?action=search&sid=$sid\"><img src=\"images/buscar.gif\" alt=\"*\"/>Buscar</a><br />";
-$paceiros = $pdo->query("SELECT COUNT(*) FROM fun_parceiros")->fetch();
-echo "<a href=\"parceiros.php?sid=$sid\"><img src=\"images/parceiros.gif\" alt=\"*\">Paceiros(".$paceiros[0].")</a><br />";
-echo "<a href=\"regras.php?sid=$sid\"><img src=\"images/mextra.gif\" alt=\"*\"/>Regras do site</a>";
-echo "</p>";
-echo "<p align=\"center\">";
-echo "<a href=\"index.php?action=main&sid=$sid\"><img src=\"images/home.gif\" alt=\"*\"/>";
-echo "Página principal</a><br />";
 echo "</p>";
 }
 ////////////////////////////////////////forum menu
@@ -1407,21 +1398,6 @@ echo "<a href=\"chat.php?sid=$sid&rid=$room[0]\">$room[1]($noi[0])</a><br />";
 echo "<br /><a href=\"index.php?action=main&sid=$sid\"><img src=\"images/home.gif\" alt=\"*\"/>Página principal</a><br />";
 echo "</p>";
 }
-else if ($action=="funm")
-{
-adicionar_online(getuid_sid($sid),"Diversão","");
-echo "<p align=\"center\"><b>Diversão</b><br />";
-echo "</p>";
-echo "<p>";
-echo "<a href=\"cassino.php?sid=$sid\">&#187;Cassino</a><br />";
-echo "<a href=\"cds.php?sid=$sid\">&#187;Cores da sorte</a><br />";
-echo "<a href=\"virtual_pet.php?action=main&sid=$sid\">&#187;Virtual pet</a><br />";
-echo "<a href=\"jockey.php?sid=$sid\">&#187;Jockey club</a><br />";
-echo "</p>";
-echo "<p align=\"center\">";
-echo "<a href=\"index.php?action=main&sid=$sid\"><img src=\"images/home.gif\" alt=\"*\"/>Página principal</a>";
-echo "</p>";
-}
 else if($action=="viewcat")
 {
 $cid = $_GET["cid"];
@@ -1451,11 +1427,11 @@ $tluid = $pinfo[0];
 $pinfo = $pdo->query("SELECT  uid  FROM fun_posts WHERE tid='".$lpt[0]."' ORDER BY dtpost DESC LIMIT 0, 1")->fetch();
 $tluid = $pinfo[0];
 }
-$tlnm = htmlspecialchars($lpt[1]);
+$tlnm = htmlspecialchars($lpt[1] ?? '');
 $tlnick = getnick_uid($tluid);
 $tpclnk = "<a href=\"index.php?action=viewtpc&sid=$sid&tid=$lpt[0]&go=last\">$tlnm</a>";
 $vulnk = "<a href=\"index.php?action=perfil&sid=$sid&who=$tluid\">$tlnick</a>";
-echo "Última postagem: $tpclnk, Por: $vulnk<br /><br />";
+echo "Última postagem: $tpclnk, Po ?? ''rnk<br /><br />";
 }
 }
 echo "";
@@ -1825,7 +1801,7 @@ $fid = $_GET["fid"];
 if(!canaccess(getuid_sid($sid), $fid))
 {
 echo "<p align=\"center\">";
-echo "Vocẽ náo possue permição para ver este conteúdo!<br /><br />";
+echo "Você náo possue permição para ver este conteúdo!<br /><br />";
 echo "<a href=\"index.php?action=main&sid=$sid\">Página principal</a>";
 echo "</p>";
 exit();
@@ -1838,7 +1814,7 @@ echo "<form action=\"genproc.php?action=newtopic&sid=$sid\" method=\"post\">";
 echo "Titúlo do tópico: <input name=\"ntitle\" maxlength=\"30\"/><br />";
 echo "Texto: <input name=\"tpctxt\" maxlength=\"2000\"/><br />";
 echo "<input type=\"hidden\" name=\"fid\" value=\"$fid\"/>";
-echo "<input type=\"submit\" value=\"Criar T�pico\"/>";
+echo "<input type=\"submit\" value=\"Criar Tópico\"/>";
 echo "<form>";
 echo "<p align=\"center\">";
 echo "Está liberado o uso de <b>BBcodes</b> e <b>Smilies</b>!";

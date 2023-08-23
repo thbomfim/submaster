@@ -1125,7 +1125,7 @@ $rets = "<form action=\"$pgurl.php\" method=\"get\">";
 $rets .= "Pular  pagina<input name=\"pg\" format=\"*N\" size=\"3\"/>";
 $rets .= "<input type=\"submit\" value=\"Ir\"/>";
 $rets .= "<input type=\"hidden\" name=\"action\" value=\"$action\"/>";
-$rets .= "<input type=\"hidden\" name=\"tid\" value=\"$tid\"/>";
+$rets .= "<input type=\"hidden\" name=\"tid\" value=\"$sid\"/>";
 $rets .= "<input type=\"hidden\" name=\"page\" value=\"$(pg)\"/>";
 $rets .= "</form>";
 return $rets;
@@ -1170,7 +1170,7 @@ function getnick_uid($uid)
 $unick = $pdo->query("SELECT name, plusses, perm, vip, sex FROM fun_users WHERE id='".$uid."'")->fetch();
 if($uid=="1")
 {
-return "<b style=\"color: #000\">$unick[0]</b>";
+return "<b style=\"color: red\">$unick[0]</b>";
 }
 else if($unick[2]=='2')
 {
